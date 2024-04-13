@@ -1,0 +1,24 @@
+services:
+  db:
+    image: mysql:8.0
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3306:3306"
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/sample-api
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
+    environment:
+      RAKUTEN_APPLICATION_ID: "1062270564308934159"
+      RAKUTEN_AFFILIATE_ID: "3a3d7a2c.e0958bf8.3a3d7a2d.57bcf82b"
+volumes:
+  db-data:
